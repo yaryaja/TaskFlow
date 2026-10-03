@@ -1,6 +1,7 @@
 package com.Project.TaskFlow.Controller;
 import com.Project.TaskFlow.Service.ProjectService;
 import  com.Project.TaskFlow.dto.ProjectRequest;
+import com.Project.TaskFlow.model.Project;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,10 @@ public class ProjectController {
         this.projectService=projectService;
     }
 
-
     @PostMapping("/api/projects")
-    public ResponseEntity<String> createProject(@RequestBody ProjectRequest newProject){
+    public ResponseEntity<Project> createProject(@RequestBody ProjectRequest newProject){
 
-        String result=projectService.createProject(newProject);
+        Project result=projectService.createProject(newProject);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
 
 

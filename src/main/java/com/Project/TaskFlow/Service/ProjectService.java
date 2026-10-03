@@ -1,18 +1,26 @@
 package com.Project.TaskFlow.Service;
 
+import com.Project.TaskFlow.model.Project;
+import com.Project.TaskFlow.repository.ProjectRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.Project.TaskFlow.dto.ProjectRequest;
-
+import com.Project.TaskFlow.repository.ProjectRepository;
 
 
 @Service
 public class ProjectService {
+    private  final ProjectRepository projectRepository;
+    public ProjectService(ProjectRepository repository){
+        this.projectRepository=repository;
+    }
 
-    public String createProject(ProjectRequest newProject){
-        System.out.println("Processing project in service: " + newProject.getName());
-        return "Project created successfully!";
+
+
+    public Project createProject(ProjectRequest newProject){
+        Project project = newProject.toEntity();
+        return projectRepository.save(project);
 
     }
 
