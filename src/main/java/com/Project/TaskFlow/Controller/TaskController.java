@@ -6,8 +6,9 @@ import com.Project.TaskFlow.model.Task;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -19,10 +20,6 @@ public class TaskController {
         this.taskService=taskService;
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleNotFound(RuntimeException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
 
     @PostMapping("/api/project/{projectId}/tasks")
     public ResponseEntity<Task> createTask(@RequestBody TaskDto newTask, @PathVariable Long projectId){
@@ -33,5 +30,14 @@ public class TaskController {
     public ResponseEntity<Task>AssignTaskToProject(@RequestBody TaskDto newTask,@PathVariable Long taskId,@PathVariable Long projectId){
         Task result=taskService.assignTaskToProject(taskId,projectId,newTask);
         return new ResponseEntity<>(result,HttpStatus.CREATED);
+    }
+
+    //    List<Task> findByProjectId(Long projectId);
+
+
+    @GetMapping("/api/projects/{projectId}/tasks")
+    public ResponseEntity<List<Task>> getAllTask(@PathVariable Long projectId){
+        List<Task> tasks=taskService.getTasksByProjectId(projectId);
+        return new ResponseEntity<>(tasks,HttpStatus.OK);
     }
 }

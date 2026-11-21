@@ -1,15 +1,13 @@
 package com.Project.TaskFlow.Controller;
+
 import com.Project.TaskFlow.Service.ProjectService;
-import com.Project.TaskFlow.Service.TaskService;
 import  com.Project.TaskFlow.dto.ProjectRequest;
-import com.Project.TaskFlow.dto.TaskDto;
 import com.Project.TaskFlow.model.Project;
-import com.Project.TaskFlow.model.Task;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.List;
-
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -48,6 +46,7 @@ public class ProjectController {
         Project updateProject= projectService.addMemberToProject(projectId,userId);
         return new ResponseEntity<>(updateProject,HttpStatus.OK);
     }
+
 
 
 
