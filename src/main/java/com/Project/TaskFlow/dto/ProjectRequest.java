@@ -1,7 +1,6 @@
 package com.Project.TaskFlow.dto;
 
 import com.Project.TaskFlow.model.Project;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
