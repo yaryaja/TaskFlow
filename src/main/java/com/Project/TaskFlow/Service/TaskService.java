@@ -44,4 +44,17 @@ public class TaskService {
         // Calling your custom derived method
         return taskRepository.findByProjectId(projectId);
     }
+
+    public Task updateTaskStatus(Long taskId, String status){
+        Task task=taskRepository.findById(taskId).orElseThrow(()->new ResourceNotFoundException("Task do not exist"));
+        if (status != null && !status.isBlank()) {
+            task.setStatus(status);
+        }
+        return taskRepository.save(task);
+    }
+
+    public void deleteTask(Long taskId){
+        Task task=taskRepository.findById(taskId).orElseThrow(()->new ResourceNotFoundException("Task do not exist"));
+        taskRepository.delete(task);
+    }
 }

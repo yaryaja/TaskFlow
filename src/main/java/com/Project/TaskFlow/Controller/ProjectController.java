@@ -3,6 +3,7 @@ package com.Project.TaskFlow.Controller;
 import com.Project.TaskFlow.Service.ProjectService;
 import  com.Project.TaskFlow.dto.ProjectRequest;
 import com.Project.TaskFlow.model.Project;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ProjectController {
 
 
     @PostMapping("/api/projects")
-    public ResponseEntity<Project> createProject(@RequestBody ProjectRequest newProject){
+    public ResponseEntity<Project> createProject(@Valid @RequestBody ProjectRequest newProject){
 
         Project result=projectService.createProject(newProject);
         return new ResponseEntity<>(result, HttpStatus.CREATED);

@@ -3,6 +3,7 @@ package com.Project.TaskFlow.Controller;
 import com.Project.TaskFlow.Service.TaskService;
 import com.Project.TaskFlow.dto.TaskDto;
 import com.Project.TaskFlow.model.Task;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class TaskController {
 
 
     @PostMapping("/api/project/{projectId}/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody TaskDto newTask, @PathVariable Long projectId){
+    public ResponseEntity<Task> createTask(@Valid @RequestBody TaskDto newTask,@Valid @PathVariable Long projectId){
         Task result=taskService.createTask(projectId,newTask);
         return  new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -39,5 +40,18 @@ public class TaskController {
     public ResponseEntity<List<Task>> getAllTask(@PathVariable Long projectId){
         List<Task> tasks=taskService.getTasksByProjectId(projectId);
         return new ResponseEntity<>(tasks,HttpStatus.OK);
+    }
+
+    @PatchMapping("/api/tasks/{taskId}/status")
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long taskId, @RequestBody TaskDto taskdto){
+    String taskStatus=taskdto.getStatus();
+    Task task=taskService.updateTaskStatus(taskId,taskStatus);
+    return new ResponseEntity<>(task,HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/api/tasks/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId){
+        taskService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
     }
 }
