@@ -8,8 +8,9 @@ import com.Project.TaskFlow.model.User;
 import com.Project.TaskFlow.repository.ProjectRepository;
 import com.Project.TaskFlow.repository.TaskRepository;
 import com.Project.TaskFlow.repository.UserRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class TaskService {
     }
 
 
-
+// create new task
     public Task createTask(Long projectId,TaskDto taskDto){
         Task task=taskDto.toEntity();
         Project foundProject=projectRepository.findById(projectId).orElseThrow(() ->new ResourceNotFoundException("project does not exist"));
@@ -40,9 +41,9 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public List<Task> getTasksByProjectId(Long projectId) {
+    public Page<Task> getTasksByProjectId(Long projectId, Pageable pageable) {
         // Calling your custom derived method
-        return taskRepository.findByProjectId(projectId);
+        return taskRepository.findByProjectId(projectId,pageable);
     }
 
     public Task updateTaskStatus(Long taskId, String status){

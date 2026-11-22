@@ -4,6 +4,10 @@ import com.Project.TaskFlow.Service.TaskService;
 import com.Project.TaskFlow.dto.TaskDto;
 import com.Project.TaskFlow.model.Task;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Controller
+@RestController
 public class TaskController {
     private  final TaskService taskService;
 
@@ -33,12 +37,11 @@ public class TaskController {
         return new ResponseEntity<>(result,HttpStatus.CREATED);
     }
 
-    //    List<Task> findByProjectId(Long projectId);
 
 
     @GetMapping("/api/projects/{projectId}/tasks")
-    public ResponseEntity<List<Task>> getAllTask(@PathVariable Long projectId){
-        List<Task> tasks=taskService.getTasksByProjectId(projectId);
+    public ResponseEntity<Page<Task>> getAllTask(@PathVariable Long projectId,@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<Task> tasks=taskService.getTasksByProjectId(projectId,pageable);
         return new ResponseEntity<>(tasks,HttpStatus.OK);
     }
 

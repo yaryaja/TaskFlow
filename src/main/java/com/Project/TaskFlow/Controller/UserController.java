@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.Project.TaskFlow.model.User;
 import  com.Project.TaskFlow.dto.UserDto;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 public class UserController {
     private  final UserService userService;
 
